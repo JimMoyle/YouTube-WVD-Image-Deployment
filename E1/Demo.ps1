@@ -21,12 +21,12 @@ $sku | Get-AzVMImage | Sort-Object -Descending -Property Version | Select-Object
 Get-AzureImageInfo -Location 'uksouth'
 
 # Validate JSON
-& packer validate Windows10ManagedImage.json
+& packer validate E1\Windows10ManagedImage.json
 
 # Do the build
 
 # All you really need is the JSON and this packer build line
-& packer build Windows10ManagedImage.json
+& packer build E1\Windows10ManagedImage.json
 
 
 # Need an image definition in the gallery for this to work
@@ -44,7 +44,7 @@ $ParamNewAzGalleryImageDefinition = @{
 
 New-AzGalleryImageDefinition @ParamNewAzGalleryImageDefinition
 
-& packer validate Windows10SharedImageGallery.json
+& packer validate E1\Windows10SharedImageGallery.json
 
 # Do the build
-& packer build Windows10SharedImageGallery.json
+& packer build E1\Windows10SharedImageGallery.json

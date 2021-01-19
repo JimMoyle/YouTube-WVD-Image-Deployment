@@ -4,7 +4,7 @@
       "type": "azure-arm",
 
       "shared_image_gallery_destination": {
-        "subscription": "4705c1d9-fec5-487f-a3e4-436f90c58c0c",
+        "subscription": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
         "resource_group": "Packer",
         "gallery_name": "PackerSIG",
         "image_name": "MyImageForSIG",

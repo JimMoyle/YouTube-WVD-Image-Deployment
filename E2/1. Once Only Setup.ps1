@@ -7,9 +7,9 @@ $subscriptionID = (Get-AzContext).Subscription.Id
 $imageResourceGroup = 'YTAzureImageBuilderRG'
 
 #Install AIB Pre-Release Modules
-#'Az.ImageBuilder', 'Az.ManagedServiceIdentity' | ForEach-Object { Install-Module -Name $_ -AllowPrerelease }
+'Az.ImageBuilder', 'Az.ManagedServiceIdentity' | ForEach-Object { Install-Module -Name $_ -AllowPrerelease }
 
-#Azure Marketplace image verification function
+#Custom Azure Marketplace image verification function (find in E1)
 . E1\Get-AzureImageInfo.ps1
 
 
@@ -38,8 +38,9 @@ $identityName = "YTAIBIdentity_$randomNum"
 New-AzUserAssignedIdentity -ResourceGroupName $imageResourceGroup -Name $identityName
 
 #Store the identity resource and principal IDs in variables.
-Set-Content E2\TempFiles\identityNameId.txt (Get-AzUserAssignedIdentity -ResourceGroupName $imageResourceGroup -Name $identityName).Id
-$identityNamePrincipalId = (Get-AzUserAssignedIdentity -ResourceGroupName $imageResourceGroup -Name $identityName).PrincipalId
+$identity = Get-AzUserAssignedIdentity -ResourceGroupName $imageResourceGroup -Name $identityName
+Set-Content E2\TempFiles\identityNameId.txt $identity.Id
+$identityNamePrincipalId = $identity.PrincipalId
 
 
 #Assign permissions for identity to distribute images

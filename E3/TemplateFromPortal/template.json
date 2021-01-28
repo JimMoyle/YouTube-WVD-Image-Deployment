@@ -1,0 +1,68 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplates_YTWin10Image_name": {
+            "defaultValue": "YTWin10Image",
+            "type": "String"
+        },
+        "galleries_YTImageGalleryAIB_externalid": {
+            "defaultValue": "/subscriptions/2f1abbf5-752d-446a-9846-2a349ee2776e/resourceGroups/YTAzureImageBuilderRG/providers/Microsoft.Compute/galleries/YTImageGalleryAIB",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.VirtualMachineImages/imageTemplates",
+            "apiVersion": "2020-02-14",
+            "name": "[parameters('imageTemplates_YTWin10Image_name')]",
+            "location": "westeurope",
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "/subscriptions/2f1abbf5-752d-446a-9846-2a349ee2776e/resourcegroups/YTAzureImageBuilderRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/YTAIBIdentity": {
+                        "principalId": "d1a904f5-ca1f-412b-a11d-506711b40def",
+                        "clientId": "c4edbcec-e592-4558-8259-6cba0618ef22"
+                    }
+                }
+            },
+            "properties": {
+                "source": {
+                    "offer": "office-365",
+                    "publisher": "MicrosoftWindowsDesktop",
+                    "sku": "20h2-evd-o365pp",
+                    "type": "PlatformImage",
+                    "version": "latest (19042.746.2101092352)"
+                },
+                "customize": [
+                    {
+                        "inline": [
+                            "mkdir c:\\\\buildActions",
+                            "echo Azure-Image-Builder-Was-Here  > c:\\\\buildActions\\\\buildActionsOutput.txt"
+                        ],
+                        "name": "settingUpMgmtAgtPath",
+                        "runAsSystem": false,
+                        "runElevated": false,
+                        "type": "PowerShell"
+                    }
+                ],
+                "distribute": [
+                    {
+                        "artifactTags": {
+                            "tag": "Jim-Share"
+                        },
+                        "excludeFromLatest": false,
+                        "galleryImageId": "[concat(parameters('galleries_YTImageGalleryAIB_externalid'), '/images/YTImageForSIG')]",
+                        "replicationRegions": [
+                            "westeurope"
+                        ],
+                        "runOutputName": "YTDistResults",
+                        "type": "SharedImage"
+                    }
+                ],
+                "buildTimeoutInMinutes": 0
+            }
+        }
+    ]
+}

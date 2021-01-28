@@ -15,7 +15,7 @@ $imageResourceGroup = 'YTAzureImageBuilderRG'
 
 #Register the following resource providers for use with your Azure subscription if they aren't already registered.
 Get-AzProviderFeature -ProviderNamespace Microsoft.VirtualMachineImages -FeatureName VirtualMachineTemplatePreview |
-    Where-Object RegistrationState -ne Registered | Register-AzProviderFeature
+    Where-Object RegistrationState -ne Registered | Register-AzProviderFeature -ProviderNamespace Microsoft.VirtualMachineImages -FeatureName VirtualMachineTemplatePreview
 
 Get-AzResourceProvider -ProviderNamespace Microsoft.Compute, Microsoft.KeyVault, Microsoft.Storage, Microsoft.VirtualMachineImages |
     Where-Object RegistrationState -ne Registered |
@@ -31,8 +31,8 @@ New-AzResourceGroup -Name $imageResourceGroup -Location $location
 
 #Create variables for the role definition and identity names. These values must be unique.
 $randomNum = Get-Random -Minimum 100000 -Maximum 999999
-$imageRoleDefName = 'Azure Image Builder Service Image Creation Role ' + $randomNum
-$identityName = "YTAIBIdentity_$randomNum"
+$imageRoleDefName = 'YT Azure Image Builder Service Image Creation Role' + $randomNum
+$identityName = "YTAIBIdentity" + $randomNum
 
 #Create a user identity.
 New-AzUserAssignedIdentity -ResourceGroupName $imageResourceGroup -Name $identityName

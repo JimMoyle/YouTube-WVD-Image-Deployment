@@ -1,6 +1,11 @@
 {
     "cSpell.words": [
         "YTAIB",
-        "imagedefid"
+        "externalid",
+        "imagedefid",
+        "svclocation"
+    ],
+    "cSpell.ignoreWords": [
+        "notcontains"
     ]
 }

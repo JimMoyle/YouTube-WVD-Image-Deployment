@@ -27,7 +27,12 @@
         "vmSize": {
             "defaultValue": "Standard_D1_v2",
             "type": "String"
+        },
+        "replicationRegions": {
+            "defaultValue": "westeurope",
+            "type": "String"
         }
+
     },
     "variables": {
         "combined":"[concat(parameters('SrcPublisher'),'.',parameters('SrcOffer'),'.',parameters('SrcSKU'))]",
@@ -78,7 +83,7 @@
                         "excludeFromLatest": false,
                         "galleryImageId": "[variables('imageDefStr')]",
                         "replicationRegions": [
-                            "westeurope"
+                            "[parameters('replicationRegions')]"
                         ],
                         "runOutputName": "[concat( 'runOutput', variables('combined'))]",
                         "type": "SharedImage"

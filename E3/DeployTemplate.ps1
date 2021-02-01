@@ -1,7 +1,5 @@
-# Get your current subscription ID.
-# $subscriptionID = (Get-AzContext).Subscription.Id
 
-# $templateFilePath = ".\E3\TemplateFromPortalSKUBased\template.json"
+# Path to template
 $templateFilePath = ".\E3\WithVersion\template.json"
 
 # Location
@@ -11,7 +9,7 @@ $location = "westeurope"
 $imageResourceGroup = 'YTAzureImageBuilderRG'
 
 # Managed Identity Name
-# $identityName = 'YTAIBIdentity_935323'
+$identityName = 'YTAIBIdentity'
 
 # Image gallery name
 $sigGalleryName = "YTImageGalleryAIB"
@@ -21,7 +19,7 @@ $destPublisher = 'Developer'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.2.1'
+$version = '1.2.2'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'
@@ -63,7 +61,10 @@ if ((Get-AzGalleryImageDefinition -ResourceGroupName $imageResourceGroup -Galler
 }
 
 $imageVersions = Get-AzGalleryImageVersion -GalleryImageDefinitionName $imageDefName -ResourceGroupName $imageResourceGroup -GalleryName $sigGalleryName
-$topVersion = [version]$imageVersions.Name | Sort-Object -Descending | Select-Object -First 1
+$verList = foreach ($ver in $imageVersions.Name) {
+    [version]$ver
+}
+$topVersion = $verList | Sort-Object -Descending | Select-Object -First 1
 
 if ( $Version -le $topVersion ) {
     Write-Error "Specified Version $Version not greater than $topVersion"

@@ -1,4 +1,5 @@
 $imageResourceGroup = 'YTAzureImageBuilderRG'
+$location = 'westeurope'
 . E1\Get-AzureImageInfo.ps1
 $info = Get-AzureImageInfo -Location $location
 

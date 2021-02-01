@@ -1,5 +1,8 @@
 # Get your current subscription ID.
-#$subscriptionID = (Get-AzContext).Subscription.Id
+# $subscriptionID = (Get-AzContext).Subscription.Id
+
+# $templateFilePath = ".\E3\TemplateFromPortalSKUBased\template.json"
+$templateFilePath = ".\E3\WithVersion\template.json"
 
 # Location
 $location = "westeurope"
@@ -8,24 +11,41 @@ $location = "westeurope"
 $imageResourceGroup = 'YTAzureImageBuilderRG'
 
 # Managed Identity Name
-#$identityName = 'YTAIBIdentity_935323'
+# $identityName = 'YTAIBIdentity_935323'
 
 # Image gallery name
 $sigGalleryName = "YTImageGalleryAIB"
 
+#image definition 'name'
+$destPublisher = 'Developer'
+$destOffer = 'en-GB'
+
+#Image definition version
+$version = '1.2.1'
+
+#Staging VM size
+$vmSize = 'Standard_D2_v2'
+
 . E1\Get-AzureImageInfo.ps1
 $info = Get-AzureImageInfo -Location $location
 
+$Sku = $info.sku
+$srcPublisher = $info.Publisher
+$srcOffer = $info.Offer
+
+$destCombined = $destPublisher + '.' + $destOffer + '.' + $Sku
+$srcCombined = $srcPublisher + '.' + $srcOffer + '.' + $Sku
+
 # Image definition name
-$imageDefName = $info.sku
+$imageDefName = $destCombined
 
 # Image template name
-$imageTemplateName = $info.sku
+$imageTemplateName = $srcCombined
 
 # Get identity details
-#$identityNameResource = Get-AzUserAssignedIdentity -ResourceGroupName $imageResourceGroup -Name $identityName
+$identityNameResource = Get-AzUserAssignedIdentity -ResourceGroupName $imageResourceGroup -Name $identityName
 
-if ((Get-AzGalleryImageDefinition -ResourceGroupName $imageResourceGroup -GalleryName $sigGalleryName).Identifier.Sku -notcontains $info.Sku) {
+if ((Get-AzGalleryImageDefinition -ResourceGroupName $imageResourceGroup -GalleryName $sigGalleryName).Name -notcontains $imageDefName) {
 
     $paramNewAzGalleryImageDefinition = @{
         GalleryName       = $sigGalleryName
@@ -34,14 +54,24 @@ if ((Get-AzGalleryImageDefinition -ResourceGroupName $imageResourceGroup -Galler
         Name              = $imageDefName
         OsState           = 'generalized'
         OsType            = 'Windows'
-        Publisher         = $info.Publisher
-        Offer             = $info.Offer
-        Sku               = $info.Sku
+        Publisher         = $destPublisher
+        Offer             = $destOffer
+        Sku               = $Sku
+        ErrorAction       = 'SilentlyContinue'
     }
     New-AzGalleryImageDefinition @paramNewAzGalleryImageDefinition
 }
 
-$templateFilePath = ".\E3\TemplateFromPortalSKUBased\template.json"
+$imageVersions = Get-AzGalleryImageVersion -GalleryImageDefinitionName $imageDefName -ResourceGroupName $imageResourceGroup -GalleryName $sigGalleryName
+$topVersion = [version]$imageVersions.Name | Sort-Object -Descending | Select-Object -First 1
+
+if ( $Version -le $topVersion ) {
+    Write-Error "Specified Version $Version not greater than $topVersion"
+    break
+}
+#$gallery = Get-AzGallery -ResourceGroupName $imageResourceGroup -GalleryName $sigGalleryName
+
+$imageDefinition = Get-AzGalleryImageDefinition -ResourceGroupName $imageResourceGroup -GalleryName $sigGalleryName -Name $imageDefName
 
 if ((Get-AzImageBuilderTemplate).Name -contains $imageTemplateName) {
     Remove-AzImageBuilderTemplate -ImageTemplateName  $imageTemplateName -ResourceGroupName $imageResourceGroup
@@ -50,6 +80,14 @@ if ((Get-AzImageBuilderTemplate).Name -contains $imageTemplateName) {
 $paramNewAzResourceGroupDeployment = @{
     ResourceGroupName = $imageResourceGroup
     TemplateFile      = $templateFilePath
+
+    Version           = $version
+    vmSize            = $vmSize
+    imageId           = $imageDefinition.Id
+    identityId        = $identityNameResource.Id
+    SrcPublisher      = $srcPublisher
+    SrcOffer          = $srcOffer
+    SrcSKU            = $Sku
 }
 New-AzResourceGroupDeployment @paramNewAzResourceGroupDeployment
 
@@ -58,7 +96,7 @@ $paramInvokeAzResourceAction = @{
     ResourceGroupName = $imageResourceGroup
     ResourceType      = 'Microsoft.VirtualMachineImages/imageTemplates'
     Action            = 'Run'
-    Confirm           = $false
+    Force             = $true
 }
 Invoke-AzResourceAction @paramInvokeAzResourceAction
 

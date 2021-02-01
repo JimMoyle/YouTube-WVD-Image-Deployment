@@ -1,0 +1,91 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "SrcSKU": {
+            "defaultValue": "20h2-evd-o365pp",
+            "type": "String"
+        },
+        "SrcOffer": {
+            "defaultValue": "office-365",
+            "type": "String"
+        },
+        "SrcPublisher": {
+            "defaultValue": "MicrosoftWindowsDesktop",
+            "type": "String"
+        },
+        "imageId": {
+            "type": "String"
+        },
+        "identityId": {
+            "type": "String"
+        },
+        "Version": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "vmSize": {
+            "defaultValue": "Standard_D1_v2",
+            "type": "String"
+        }
+    },
+    "variables": {
+        "combined":"[concat(parameters('SrcPublisher'),'.',parameters('SrcOffer'),'.',parameters('SrcSKU'))]",
+        "withVersion": "[concat(parameters('imageId'), '/versions/', parameters('Version'))]",
+        "imageDefStr": "[ if(empty(parameters('Version')), parameters('imageId'), variables('withVersion')) ]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.VirtualMachineImages/imageTemplates",
+            "apiVersion": "2020-02-14",
+            "name": "[variables('combined')]",
+            "location": "westeurope",
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[parameters('identityId')]": {}
+                }
+            },
+            "properties": {
+                "vmProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                },
+                "source": {
+                    "offer": "[parameters('SrcOffer')]",
+                    "publisher": "[parameters('SrcPublisher')]",
+                    "sku": "[parameters('SrcSKU')]",
+                    "type": "PlatformImage",
+                    "version": "latest"
+                },
+                "customize": [
+                    {
+                        "inline": [
+                            "mkdir c:\\\\buildActions",
+                            "echo Azure-Image-Builder-Was-Here  > c:\\\\buildActions\\\\buildActionsOutput.txt"
+                        ],
+                        "name": "settingUpMgmtAgtPath",
+                        "runAsSystem": false,
+                        "runElevated": false,
+                        "type": "PowerShell"
+                    }
+                ],
+                "distribute": [
+                    {
+                        "artifactTags": {
+                            "Project": "YouTube",
+                            "Author": "Jim Moyle"
+                        },
+                        "excludeFromLatest": false,
+                        "galleryImageId": "[variables('imageDefStr')]",
+                        "replicationRegions": [
+                            "westeurope"
+                        ],
+                        "runOutputName": "[concat( 'runOutput', variables('combined'))]",
+                        "type": "SharedImage"
+                    }
+                ],
+                "buildTimeoutInMinutes": 0
+            }
+        }
+    ]
+}

@@ -32,7 +32,6 @@
             "defaultValue": "westeurope",
             "type": "String"
         }
-
     },
     "variables": {
         "combined":"[concat(parameters('SrcPublisher'),'.',parameters('SrcOffer'),'.',parameters('SrcSKU'))]",

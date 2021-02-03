@@ -1,6 +1,6 @@
 
 # Path to template
-$templateFilePath = ".\E3\WithVersion\template.json"
+$templateFilePath = ".\E3\3 TemplateAndScript\template.json"
 
 # Location
 $location = "westeurope"
@@ -19,7 +19,7 @@ $destPublisher = 'Developer'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.2.2'
+$version = '1.0.1'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'

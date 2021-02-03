@@ -2,13 +2,28 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "SKU": {
+        "SrcSKU": {
             "value": null
         },
-        "galleries_externalid": {
+        "SrcOffer": {
+            "value": null
+        },
+        "SrcPublisher": {
+            "value": null
+        },
+        "imageId": {
+            "value": null
+        },
+        "identityId": {
             "value": null
         },
         "Version": {
+            "value": null
+        },
+        "vmSize": {
+            "value": null
+        },
+        "replicationRegions": {
             "value": null
         }
     }

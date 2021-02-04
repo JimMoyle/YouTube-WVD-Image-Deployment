@@ -8,4 +8,4 @@ $fileName = split-path $gfw.uri -Leaf
 $outFile = join-path 'c:\CustomizerArtifacts' $fileName
 Invoke-WebRequest $gfw.uri -OutFile $outFile
 Start-Process -FilePath $outFile -Argument "/VERYSILENT /suppressmsgboxes /MERGETASKS=!runcode" -Wait
-$stop
+Write-Host 'VSCode Installed'

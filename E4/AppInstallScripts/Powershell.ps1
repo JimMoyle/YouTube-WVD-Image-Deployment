@@ -13,5 +13,5 @@ if (-not(Test-Path $outFile)) {
 }
 Start-Process -FilePath msiexec.exe -Argument "/i $outFile /qn /norestart" -Wait
 Remove-Item $outFile
-$stop
+Write-Host 'PowerShell Installed'
  

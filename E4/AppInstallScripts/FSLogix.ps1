@@ -12,4 +12,4 @@ Expand-Archive $outFile $extPath
 Start-Process -FilePath (Join-Path $extPath "\x64\Release\FSLogixAppsSetup.exe") -Argument '-install -quiet -norestart' -Wait
 Remove-Item $outFile
 Remove-Item $extPath -Recurse
-$stop
+Write-Host 'FSLogix Installed'

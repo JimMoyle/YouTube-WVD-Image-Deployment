@@ -34,7 +34,7 @@
         }
     },
     "variables": {
-        "combined":"[concat(parameters('SrcPublisher'),'.',parameters('SrcOffer'),'.',parameters('SrcSKU'))]",
+        "combined": "[concat(parameters('SrcPublisher'),'.',parameters('SrcOffer'),'.',parameters('SrcSKU'))]",
         "withVersion": "[concat(parameters('imageId'), '/versions/', parameters('Version'))]",
         "imageDefStr": "[ if(empty(parameters('Version')), parameters('imageId'), variables('withVersion')) ]"
     },
@@ -63,14 +63,46 @@
                 },
                 "customize": [
                     {
-                        "inline": [
-                            "mkdir c:\\\\buildActions",
-                            "echo Azure-Image-Builder-Was-Here  > c:\\\\buildActions\\\\buildActionsOutput.txt"
-                        ],
-                        "name": "settingUpMgmtAgtPath",
-                        "runAsSystem": false,
-                        "runElevated": false,
-                        "type": "PowerShell"
+                        "type": "PowerShell",
+                        "runAsSystem": true,
+                        "runElevated": true,
+                        "name": "OutputTest",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/OutputTest.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "runAsSystem": true,
+                        "runElevated": true,
+                        "name": "Powershell",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/Powershell.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "runAsSystem": true,
+                        "runElevated": true,
+                        "name": "GitForWindows",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/GitForWindows.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "runAsSystem": true,
+                        "runElevated": true,
+                        "name": "VSCode",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/VSCode.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "runAsSystem": true,
+                        "runElevated": true,
+                        "name": "FSLogix",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/FSLogix.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "runAsSystem": true,
+                        "runElevated": true,
+                        "name": "Teams",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/Teams.ps1"
                     }
                 ],
                 "distribute": [

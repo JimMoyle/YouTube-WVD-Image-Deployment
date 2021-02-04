@@ -4,33 +4,33 @@
     "parameters": {
         "SrcSKU": {
             "defaultValue": "20h2-evd-o365pp",
-            "type": "String"
+            "type": "string"
         },
         "SrcOffer": {
             "defaultValue": "office-365",
-            "type": "String"
+            "type": "string"
         },
         "SrcPublisher": {
             "defaultValue": "MicrosoftWindowsDesktop",
-            "type": "String"
+            "type": "string"
         },
         "imageId": {
-            "type": "String"
+            "type": "string"
         },
         "identityId": {
-            "type": "String"
+            "type": "string"
         },
         "Version": {
             "defaultValue": "",
-            "type": "String"
+            "type": "string"
         },
         "vmSize": {
-            "defaultValue": "Standard_D1_v2",
-            "type": "String"
+            "defaultValue": "Standard_D2_v2",
+            "type": "string"
         },
         "replicationRegions": {
             "defaultValue": "westeurope",
-            "type": "String"
+            "type": "string"
         }
     },
     "variables": {

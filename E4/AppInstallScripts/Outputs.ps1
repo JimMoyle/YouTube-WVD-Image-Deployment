@@ -1,0 +1,10 @@
+$InformationPreference = 'Continue'
+$VerbosePreference = 'Continue'
+$DebugPreference = 'Continue'
+
+Write-Output 'Write-Output was here'
+Write-Host 'Write-Host was here'
+Write-Information 'Write-Information was here'
+Write-Verbose 'Write-Verbose was here'
+Write-Debug 'Write-Debug was here'
+Write-Error 'Write-Error was here'

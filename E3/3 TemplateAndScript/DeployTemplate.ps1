@@ -15,7 +15,7 @@ $identityName = 'YTAIBIdentity'
 $sigGalleryName = "YTImageGalleryAIB"
 
 #image definition 'name'
-$destPublisher = 'Developer'
+$destPublisher = 'Finance'
 $destOffer = 'en-GB'
 
 #Image definition version

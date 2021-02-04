@@ -1,4 +1,4 @@
-﻿$BuildDir = 'c:\CustomizerArtifacts'
+﻿$BuildDir = 'C:\CustomizerArtifacts'
 if (-not(Test-Path $BuildDir)){
     New-Item  -ItemType Directory $BuildDir
 }

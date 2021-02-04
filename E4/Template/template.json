@@ -103,6 +103,20 @@
                         "runElevated": true,
                         "name": "Teams",
                         "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/Teams.ps1"
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-host 'restarting post Teams Install'",
+                        "restartTimeout": "5m"
+                    },
+                    {
+                        "type": "WindowsUpdate",
+                        "searchCriteria": "IsInstalled=0",
+                        "filters": [
+                            "exclude:$_.Title -like '*Preview*'",
+                            "include:$true"
+                        ],
+                        "updateLimit": 200
                     }
                 ],
                 "distribute": [

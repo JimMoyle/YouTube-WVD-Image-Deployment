@@ -115,15 +115,6 @@
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-host 'restarting post Teams Install'",
                         "restartTimeout": "5m"
-                    },
-                    {
-                        "type": "WindowsUpdate",
-                        "searchCriteria": "IsInstalled=0",
-                        "filters": [
-                            "exclude:$_.Title -like '*Preview*'",
-                            "include:$true"
-                        ],
-                        "updateLimit": 200
                     }
                 ],
                 "distribute": [

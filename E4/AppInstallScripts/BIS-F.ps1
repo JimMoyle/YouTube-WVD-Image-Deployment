@@ -24,5 +24,5 @@ foreach ($file in $jsonPath) {
     }
 }
 $startBISF = Join-Path $bisfPath "\Framework\PrepBISF_Start.ps1"
-Start-Process -FilePath $startBISF -Wait
+& $startBISF
 Write-Host 'BISF Run'

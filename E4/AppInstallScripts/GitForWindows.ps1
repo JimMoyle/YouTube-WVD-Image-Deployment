@@ -13,4 +13,4 @@ if (-not(Test-Path $outFile)) {
 }
 Start-Process -FilePath $outFile -Argument "/VERYSILENT /NORESTART" -Wait
 Remove-Item $outFile
-Write-Host 'GitForWindows Installed'
+Write-Output 'GitForWindows Installed'

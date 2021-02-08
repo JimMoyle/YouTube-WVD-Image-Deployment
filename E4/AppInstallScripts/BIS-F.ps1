@@ -13,7 +13,7 @@ if (-not(Test-Path $outFile)) {
 }
 Start-Process -FilePath msiexec.exe -Argument "/i $outFile /qn" -Wait
 Remove-Item $outFile
-Write-Host 'BISF Installed'
+Write-Output 'BISF Installed'
 $bisfPath = 'C:\Program Files (x86)\Base Image Script Framework (BIS-F)'
 $jsonPath = "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/BIS-F/BISFconfig_MicrosoftWindows10EnterpriseforVirtualDesktops_64-bit.json", "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/BIS-F/BISFSharedConfig.json"
 foreach ($file in $jsonPath) {
@@ -25,4 +25,4 @@ foreach ($file in $jsonPath) {
 }
 $startBISF = Join-Path $bisfPath "\Framework\PrepBISF_Start.ps1"
 & $startBISF
-Write-Host 'BISF Run'
+Write-Output 'BISF Run'

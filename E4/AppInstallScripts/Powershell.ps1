@@ -6,7 +6,7 @@ if (-not(Test-Path $BuildDir)) {
 $allVersions = Get-MicrosoftPowerShell
 $mostRecent = $allVersions | Sort-Object -Descending -Property 'Version' | Select-Object -First 1 | Select-Object -ExpandProperty 'Version'
 $allOnVersion = $allVersions | Where-Object { $_.version -eq $mostRecent }
-$myVersion = $allOnVersion | Where-Object { $_.Architecture -eq 'x64'}
+$myVersion = $allOnVersion | Where-Object { $_.Architecture -eq 'x64' -and $_.Platform -eq 'Windows' -and $_.URI -like "*.msi"}
 $fileName = split-path $myVersion.uri -Leaf
 $outFile = join-path 'c:\CustomizerArtifacts' $fileName
 if (-not(Test-Path $outFile)) {

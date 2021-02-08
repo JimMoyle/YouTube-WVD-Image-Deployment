@@ -16,4 +16,4 @@ New-item $teamsRegKey
 New-ItemProperty -Path $teamsRegKey -Name 'IsWVDEnvironment' -Value 1 -PropertyType DWORD
 Start-Process -FilePath msiexec.exe -Argument "/i $outFile /qn /norestart ALLUSER=1 ALLUSERS=1" -Wait
 Remove-Item $outFile
-Write-Host 'Teams Installed'
+Write-Output 'Teams Installed'

@@ -9,4 +9,4 @@ $outFile = join-path 'c:\CustomizerArtifacts' $fileName
 Invoke-WebRequest $gfw.uri -OutFile $outFile
 Start-Process -FilePath $outFile -Argument "/VERYSILENT /suppressmsgboxes /MERGETASKS=!runcode" -Wait
 Remove-Item $outFile
-Write-Host 'VSCode Installed'
+Write-Output 'VSCode Installed'

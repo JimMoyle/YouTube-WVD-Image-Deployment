@@ -136,6 +136,13 @@
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-host 'restarting post Windows Update'",
                         "restartTimeout": "5m"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "runAsSystem": true,
+                        "runElevated": true,
+                        "name": "BIS-F",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/BIS-F.ps1"
                     }
                 ],
                 "distribute": [

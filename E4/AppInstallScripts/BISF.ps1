@@ -15,7 +15,7 @@ Start-Process -FilePath msiexec.exe -Argument "/i $outFile /qn" -Wait
 Remove-Item $outFile
 Write-Output 'BISF Installed'
 $bisfPath = 'C:\Program Files (x86)\Base Image Script Framework (BIS-F)'
-$jsonPath = "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/BIS-F/BISFconfig_MicrosoftWindows10EnterpriseforVirtualDesktops_64-bit.json", "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/BIS-F/BISFSharedConfig.json"
+$jsonPath = "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/BISF/BISFconfig_MicrosoftWindows10EnterpriseforVirtualDesktops_64-bit.json", "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/BISF/BISFSharedConfig.json"
 foreach ($file in $jsonPath) {
     $fileName = Split-Path $file -Leaf
     $outFile = Join-Path $bisfPath $fileName
@@ -24,5 +24,5 @@ foreach ($file in $jsonPath) {
     }
 }
 $startBISF = Join-Path $bisfPath "\Framework\PrepBISF_Start.ps1"
-& $startBISF
+& $startBISF -verbose
 Write-Output 'BISF Run'

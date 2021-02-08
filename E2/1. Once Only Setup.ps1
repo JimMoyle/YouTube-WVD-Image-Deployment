@@ -12,9 +12,8 @@ $imageResourceGroup = 'YTAzureImageBuilderRG'
 #Custom Azure Marketplace image verification function (find in E1)
 . .\E1\Get-AzureImageInfo.ps1
 
-
 #Register the following resource providers for use with your Azure subscription if they aren't already registered.
-Register-AzProviderFeature -ProviderNamespace Microsoft.VirtualMachineImages -FeatureName VirtualMachineTemplatePreview
+Register-AzProviderFeature -ProviderNamespace Microsoft.VirtualMachineImages -FeatureName VirtualMachineTemplatePreview -ErrorAction SilentlyContinue
 
 Get-AzResourceProvider -ProviderNamespace Microsoft.Compute, Microsoft.KeyVault, Microsoft.Storage, Microsoft.VirtualMachineImages |
     Where-Object RegistrationState -ne Registered |

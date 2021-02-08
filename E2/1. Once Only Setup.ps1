@@ -10,12 +10,11 @@ $imageResourceGroup = 'YTAzureImageBuilderRG'
 'Az.ImageBuilder', 'Az.ManagedServiceIdentity' | ForEach-Object { Install-Module -Name $_ -AllowPrerelease }
 
 #Custom Azure Marketplace image verification function (find in E1)
-. E1\Get-AzureImageInfo.ps1
+. .\E1\Get-AzureImageInfo.ps1
 
 
 #Register the following resource providers for use with your Azure subscription if they aren't already registered.
-Get-AzProviderFeature -ProviderNamespace Microsoft.VirtualMachineImages -FeatureName VirtualMachineTemplatePreview |
-    Where-Object RegistrationState -ne Registered | Register-AzProviderFeature -ProviderNamespace Microsoft.VirtualMachineImages -FeatureName VirtualMachineTemplatePreview
+Register-AzProviderFeature -ProviderNamespace Microsoft.VirtualMachineImages -FeatureName VirtualMachineTemplatePreview
 
 Get-AzResourceProvider -ProviderNamespace Microsoft.Compute, Microsoft.KeyVault, Microsoft.Storage, Microsoft.VirtualMachineImages |
     Where-Object RegistrationState -ne Registered |
@@ -58,6 +57,7 @@ $Content | Out-File -FilePath $myRoleImageCreationPath -Force
 
 #Create the role definition.
 New-AzRoleDefinition -InputFile $myRoleImageCreationPath
+Start-Sleep -s 300 #this can take a few so sleep for a bit
 
 #Grant the role definition to the image builder service principal.
 $RoleAssignParams = @{

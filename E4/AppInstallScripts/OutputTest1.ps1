@@ -1,0 +1,6 @@
+Write-Output 'Write-Output was here first time'
+Write-Host 'Write-Host was here first time'
+Write-Information 'Write-Information was here first time'
+Write-Verbose 'Write-Verbose was here first time'
+Write-Debug 'Write-Debug was here first time'
+Write-Error 'Write-Error was here first time'

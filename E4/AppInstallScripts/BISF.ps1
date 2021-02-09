@@ -1,3 +1,5 @@
+Write-Output 'BISF Start'
+
 $BuildDir = 'c:\CustomizerArtifacts'
 if (-not(Test-Path $BuildDir)) {
     New-Item  -ItemType Directory $BuildDir
@@ -24,5 +26,5 @@ foreach ($file in $jsonPath) {
     }
 }
 $startBISF = Join-Path $bisfPath "\Framework\PrepBISF_Start.ps1"
-& $startBISF -verbose
+& $startBISF -Verbose
 Write-Output 'BISF Run'

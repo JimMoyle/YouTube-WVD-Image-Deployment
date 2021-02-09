@@ -1,6 +1,6 @@
 
 # Path to template
-$templateFilePath = ".\E4\Template\template.json"
+$templateFilePath = ".\E4\Template\templateBISF.json"
 
 # Location
 $location = "westeurope"

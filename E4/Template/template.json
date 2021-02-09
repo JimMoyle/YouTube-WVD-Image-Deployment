@@ -143,6 +143,11 @@
                         "runElevated": true,
                         "name": "BIS-F",
                         "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/BISF.ps1"
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-host 'restarting post Windows Update'",
+                        "restartTimeout": "5m"
                     }
                 ],
                 "distribute": [

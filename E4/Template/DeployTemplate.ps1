@@ -1,6 +1,6 @@
 
 # Path to template
-$templateFilePath = ".\E4\Template\templateBISF.json"
+$templateFilePath = ".\E4\Template\template.json"
 
 # Location
 $location = "westeurope"
@@ -19,7 +19,7 @@ $destPublisher = 'Developer'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.2.0'
+$version = '1.4.1'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'

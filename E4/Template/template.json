@@ -133,6 +133,17 @@
                         "updateLimit": 200
                     },
                     {
+                        "inline": [
+                            "Write-Output 'Starting Sleep'",
+                            "Start-Sleep 300",
+                            "Write-Output 'Finished Sleep'"
+                        ],
+                        "name": "settingUpMgmtAgtPath",
+                        "runAsSystem": false,
+                        "runElevated": false,
+                        "type": "PowerShell"
+                    },
+                    {
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-host 'restarting post Windows Update'",
                         "restartTimeout": "5m"

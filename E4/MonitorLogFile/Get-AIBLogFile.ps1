@@ -10,8 +10,8 @@ function Get-AibLogFile {
         $s = Get-AzStorageAccount -ResourceGroupName $r.ResourceGroupName -Name $Name
         $p = Get-AzStorageContainer -Context $s.context | Where-Object { $_.Name -eq 'packerlogs' }
         $container = Get-AzStorageBlob -Container $p.Name -Context $s.context
-        $fileLoc = Get-AzStorageBlobContent -Container $p.Name -Context $s.context -Blob $container.Name -Destination 'c:\jimm' -Force
-        Copy-Item ( Join-Path 'c:\jimm' $fileLoc.name) $TargetPath -Force
+        $fileLoc = Get-AzStorageBlobContent -Container $p.Name -Context $s.context -Blob $container.Name -Destination 'c:\jimm' -Force -ErrorAction SilentlyContinue
+        Copy-Item ( Join-Path 'c:\jimm' $fileLoc.name) $TargetPath -Force -ErrorAction SilentlyContinue
         $content = Get-Content -Path $TargetPath -Tail 1
         if ($content -like "*Done exporting Packer logs to Azure Storage.") {
             $continue = $false

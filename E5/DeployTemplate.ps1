@@ -1,6 +1,6 @@
 
 # Path to template
-$templateFilePath = ".\E4\Template\template.json"
+$templateFilePath = ".\E5\template.json"
 
 # Location
 $location = "westeurope"
@@ -19,7 +19,7 @@ $destPublisher = 'Developer'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.4.6'
+$version = '1.5.0'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'

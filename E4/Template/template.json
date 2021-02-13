@@ -64,14 +64,10 @@
                 "customize": [
                     {
                         "type": "PowerShell",
+                        "runAsSystem": true,
                         "runElevated": true,
-                        "name": "get ps1",
-                        "inline": [
-                            "Write-Output 'getting powershell files'",
-                            "gci -path c:\\Windows\\temp -File -Filter *.ps1",
-                            "gci -path c:\\Windows\\temp -File -Filter *.ps1 | get-content",
-                            "Write-Output 'Done powershell files'"
-                        ]
+                        "name": "getthing",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/Prep.ps1"
                     },
                     {
                         "type": "PowerShell",

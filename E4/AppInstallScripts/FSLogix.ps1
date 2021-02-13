@@ -4,7 +4,6 @@ if (-not(Test-Path $BuildDir)){
     New-Item -ItemType Directory $BuildDir
 }
 $myVersion = Get-MicrosoftFSLogixApps
-#$myVersion = $g | Where-Object {$_.Architecture -eq 'x64' -and $_.Channel -eq 'Stable' -and $_.platform -eq "win32-x64"}
 $fileName = split-path $myVersion.uri -Leaf -Verbose
 $outFile = join-path 'c:\CustomizerArtifacts' $fileName
 Invoke-WebRequest $myVersion.uri -OutFile $outFile

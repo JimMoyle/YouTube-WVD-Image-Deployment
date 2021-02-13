@@ -1,4 +1,3 @@
-
 # Path to template
 $templateFilePath = ".\E4\Template\template.json"
 
@@ -19,7 +18,7 @@ $destPublisher = 'Developer'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.4.7'
+$version = '1.4.8'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'

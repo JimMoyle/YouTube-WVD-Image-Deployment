@@ -1,4 +1,4 @@
-$VerbosePreference = 'Continue'
+Write-Output 'PowerShell Core Start'
 $BuildDir = 'c:\CustomizerArtifacts'
 if (-not(Test-Path $BuildDir)) {
     New-Item  -ItemType Directory $BuildDir
@@ -14,4 +14,4 @@ if (-not(Test-Path $outFile)) {
 }
 Start-Process -FilePath msiexec.exe -Argument "/i $outFile /qn /norestart" -Wait
 Remove-Item $outFile
-Write-Output 'PowerShell Installed'
+Write-Output 'PowerShell Core Installed'

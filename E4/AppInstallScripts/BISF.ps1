@@ -26,5 +26,5 @@ foreach ($file in $jsonPath) {
     }
 }
 $startBISF = Join-Path $bisfPath "\Framework\PrepBISF_Start.ps1"
-& $startBISF -Verbose
+& $startBISF
 Write-Output 'BISF Run Finished'

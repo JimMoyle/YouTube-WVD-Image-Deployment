@@ -1,4 +1,5 @@
-﻿$BuildDir = 'c:\CustomizerArtifacts'
+﻿Write-Output 'GitForWindows Start'
+$BuildDir = 'c:\CustomizerArtifacts'
 if (-not(Test-Path $BuildDir)) {
     New-Item  -ItemType Directory $BuildDir
 }

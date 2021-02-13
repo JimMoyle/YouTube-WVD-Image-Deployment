@@ -1,3 +1,4 @@
+Write-Output 'FSLogix Start'
 $BuildDir = 'c:\CustomizerArtifacts'
 if (-not(Test-Path $BuildDir)){
     New-Item -ItemType Directory $BuildDir

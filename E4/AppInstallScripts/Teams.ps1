@@ -1,3 +1,4 @@
+Write-Output 'Teams Start'
 $BuildDir = 'c:\CustomizerArtifacts'
 if (-not(Test-Path $BuildDir)) {
     New-Item  -ItemType Directory $BuildDir
@@ -12,7 +13,7 @@ if (-not(Test-Path $outFile)) {
     Invoke-WebRequest $myVersion.uri -OutFile $outFile
 }
 $teamsRegKey = 'HKLM:\SOFTWARE\Microsoft\Teams'
-New-item $teamsRegKey
+New-item $teamsRegKey | Out-Null
 New-ItemProperty -Path $teamsRegKey -Name 'IsWVDEnvironment' -Value 1 -PropertyType DWORD
 Start-Process -FilePath msiexec.exe -Argument "/i $outFile /qn /norestart ALLUSER=1 ALLUSERS=1" -Wait
 Remove-Item $outFile

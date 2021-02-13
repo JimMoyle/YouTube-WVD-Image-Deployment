@@ -1,4 +1,4 @@
-﻿Write-Output ' Installing VSCode'
+﻿Write-Output 'VSCode Start'
 $BuildDir = 'C:\CustomizerArtifacts'
 if (-not(Test-Path $BuildDir)){
     New-Item  -ItemType Directory $BuildDir

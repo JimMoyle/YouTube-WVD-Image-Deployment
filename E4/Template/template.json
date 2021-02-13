@@ -67,7 +67,7 @@
                         "runAsSystem": true,
                         "runElevated": true,
                         "name": "getthing",
-                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/Prep.ps1"
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/Utils/getthing.ps1"
                     },
                     {
                         "type": "PowerShell",

@@ -1,4 +1,3 @@
-
 # Path to template
 $templateFilePath = ".\E5\template.json"
 

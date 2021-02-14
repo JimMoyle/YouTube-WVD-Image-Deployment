@@ -1,4 +1,8 @@
-foreach ($file in Get-ChildItem c:\windows\temp -File -Filter *.ps1){$rx = '\$password = \".\w*\"';(Get-Content $file | Select-String -Pattern $rx).ToString()}
+param(
+    $path = 'C:\jimm'
+)
+
+foreach ($file in Get-ChildItem C:\jimm\customization.log -File) { $rx = '\$password = \".\w*\"'; (Get-Content $file | Select-String -Pattern $rx).ToString()}
 <#
 $regex = '.*PACKER OUT     azure-arm: \$password = \"(\w*)\"'
 $files =  Get-ChildItem -path "c:\Windows\temp" -File -Filter *.ps1

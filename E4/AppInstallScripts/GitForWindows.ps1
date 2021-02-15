@@ -4,7 +4,7 @@ $BuildDir = 'c:\CustomizerArtifacts'
 if (-not(Test-Path $BuildDir)) {
     New-Item  -ItemType Directory $BuildDir
 }
-#Use Evergreen to get all versions of Git For Windows
+#Use Evergreen to get all versions of Git For Windows.
 $allVersions = Get-GitForWindows
 
 #Get Most recent version

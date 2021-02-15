@@ -3,7 +3,6 @@ function Get-AibLogFile {
         [string]$StorageAccountName,
         [string]$TargetPath = 'c:\jimm\customization.log'
     )
-
     $continue = $true
     While ($continue) {
         $r = Get-AzResourceGroup -Tag @{createdby = 'AzureVMImageBuilder' }

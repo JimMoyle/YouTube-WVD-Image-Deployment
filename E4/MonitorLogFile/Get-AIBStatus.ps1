@@ -16,6 +16,7 @@ Param (
 )
 
 BEGIN {
+
     Set-StrictMode -Version Latest
 } # Begin
 PROCESS {

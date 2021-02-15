@@ -64,17 +64,6 @@
                 "customize": [
                     {
                         "type": "PowerShell",
-                        "runElevated": true,
-                        "name": "get ps1",
-                        "inline": [
-                            "Write-Output 'getting powershell files'",
-                            "gci -path c:\\Windows\\temp -File -Filter *.ps1",
-                            "gci -path c:\\Windows\\temp -File -Filter *.ps1 | get-content",
-                            "Write-Output 'Done powershell files'"
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
                         "runAsSystem": true,
                         "runElevated": true,
                         "name": "Prep",

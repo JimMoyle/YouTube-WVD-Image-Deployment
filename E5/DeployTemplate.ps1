@@ -18,7 +18,7 @@ $destPublisher = 'Developer'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.5.11'
+$version = '1.5.14'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'

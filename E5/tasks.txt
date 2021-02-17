@@ -1,6 +1,6 @@
 register event grid provider
 
-Create iHaveRun RunBook
+Create SubsWritesHaveRun RunBook
 
 Create an Event Grid System Topic - You can only have 1, contains everything hapenning in your subscription
 
@@ -17,3 +17,13 @@ Create VM
 Create Deployment
 
 Compare both
+
+SubsWrites - 2 Runbooks SubsWritesHaveRun, SubsWritesSummary
+Compute - Compute
+VMCreate - VMCreate
+AibVmCreate - VMCreate
+
+Filters:
+data.resourceProvider Microsoft.Compute
+data.operationName ute/virtualMachines/write
+data.authorization.evidence.principalId 5ca1f412ba11d506711b40def

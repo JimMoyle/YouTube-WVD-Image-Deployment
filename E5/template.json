@@ -65,108 +65,13 @@
                     {
                         "type": "PowerShell",
                         "runElevated": true,
-                        "name": "get ps1",
-                        "inline": [
-                            "Write-Output 'getting powershell files'",
-                            "gci -path c:\\Windows\\temp -File -Filter *.ps1",
-                            "gci -path c:\\Windows\\temp -File -Filter *.ps1 | get-content",
-                            "Write-Output 'Done powershell files'"
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
-                        "runElevated": true,
-                        "name": "DeprovisioningScript",
+                        "name": "Sysprep command change",
                         "inline": [
                             "Write-Output 'Changing Sysprep switches'",
                             "((Get-Content -path C:\\DeprovisioningScript.ps1 -Raw) -replace 'Sysprep.exe /oobe /generalize /quiet /quit','Sysprep.exe /oobe /generalize /quit /mode:vm' ) | Set-Content -Path C:\\DeprovisioningScript.ps1",
                             "$switches = Get-Content -path C:\\DeprovisioningScript.ps1 | Select-String -Pattern Sysprep.exe",
                             "Write-Output \"New Sysprep command is $switches\""
                         ]
-                    },
-                    {
-                        "type": "PowerShell",
-                        "runAsSystem": true,
-                        "runElevated": true,
-                        "name": "Prep",
-                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/Prep.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "runAsSystem": true,
-                        "runElevated": true,
-                        "name": "Powershell",
-                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/Powershell.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "runAsSystem": true,
-                        "runElevated": true,
-                        "name": "GitForWindows",
-                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/GitForWindows.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "runAsSystem": true,
-                        "runElevated": true,
-                        "name": "VSCode",
-                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/VSCode.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "runAsSystem": true,
-                        "runElevated": true,
-                        "name": "FSLogix",
-                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/FSLogix.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "runAsSystem": true,
-                        "runElevated": true,
-                        "name": "Teams",
-                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/Teams.ps1"
-                    },
-                    {
-                        "type": "WindowsRestart",
-                        "restartCheckCommand": "write-host 'restarting post Apps Install'",
-                        "restartTimeout": "5m"
-                    },
-                    {
-                        "type": "WindowsUpdate",
-                        "searchCriteria": "IsInstalled=0",
-                        "filters": [
-                            "exclude:$_.Title -like '*Preview*'",
-                            "include:$true"
-                        ],
-                        "updateLimit": 200
-                    },
-                    {
-                        "type": "PowerShell",
-                        "runAsSystem": true,
-                        "runElevated": true,
-                        "inline": [
-                            "Write-Output 'Starting Sleep'",
-                            "Start-Sleep -s 300",
-                            "Write-Output 'Finished Sleep'"
-                        ],
-                        "name": "DelayAfterUpdate"
-                    },
-                    {
-                        "type": "WindowsRestart",
-                        "restartCheckCommand": "write-host 'restarting post Windows Update'",
-                        "restartTimeout": "5m"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "runAsSystem": true,
-                        "runElevated": true,
-                        "name": "BIS-F",
-                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/BISF.ps1"
-                    },
-                    {
-                        "type": "WindowsRestart",
-                        "restartCheckCommand": "write-host 'restarting post BISF'",
-                        "restartTimeout": "5m"
                     }
                 ],
                 "distribute": [

@@ -6,7 +6,7 @@ Param (
         ValuefromPipelineByPropertyName = $true,
         ValuefromPipeline = $true
     )]
-    [System.String]$ResourceGruopName = 'YTAzureImageBuilderRG',
+    [System.String]$ImageResourceGroup = 'YTAzureImageBuilderRG',
     [Parameter(
         Position = 0,
         ValuefromPipelineByPropertyName = $true,
@@ -20,7 +20,7 @@ BEGIN {
 } # Begin
 PROCESS {
     while ($true) {
-        Get-AzImageBuilderTemplate -ImageTemplateName  $imageTemplateName -ResourceGroupName $imageResourceGroup |
+        Get-AzImageBuilderTemplate -ImageTemplateName  $imageTemplateName -ResourceGroupName $ImageResourceGroup |
         Select-Object LastRunStatusRunState, LastRunStatusRunSubState, ProvisioningState, ProvisioningErrorMessage, LastRunStatusMessage
         Start-Sleep 5
         Clear-Host

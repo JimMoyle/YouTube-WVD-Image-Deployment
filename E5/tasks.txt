@@ -1,0 +1,19 @@
+register event grid provider
+
+Create iHaveRun RunBook
+
+Create an Event Grid System Topic - You can only have 1, contains everything hapenning in your subscription
+
+Create an event subscription with both write things
+
+Tie to RunBook Webhook
+
+Create vNet
+
+Create RunBook Summary
+
+Create VM
+
+Create Deployment
+
+Compare both

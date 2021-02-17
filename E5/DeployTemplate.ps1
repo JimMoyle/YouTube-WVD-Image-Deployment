@@ -18,12 +18,12 @@ $destPublisher = 'Developer'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.5.0'
+$version = '1.5.11'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'
 
-. E1\Get-AzureImageInfo.ps1
+. Utils\Get-AzureImageInfo.ps1
 $info = Get-AzureImageInfo -Location $location
 
 $Sku = $info.sku
@@ -65,8 +65,8 @@ $verList = foreach ($ver in $imageVersions.Name) {
 }
 $topVersion = $verList | Sort-Object -Descending | Select-Object -First 1
 
-if ( $Version -le $topVersion ) {
-    Write-Error "Specified Version $Version not greater than $topVersion"
+if ( [version]$Version -le $topVersion ) {
+    Write-Error "Specified Version $Version not greater than current available $topVersion"
     break
 }
 #$gallery = Get-AzGallery -ResourceGroupName $imageResourceGroup -GalleryName $sigGalleryName
@@ -99,5 +99,3 @@ $paramInvokeAzResourceAction = @{
     Force             = $true
 }
 Invoke-AzResourceAction @paramInvokeAzResourceAction
-
-# Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName -NoWait -PassThru

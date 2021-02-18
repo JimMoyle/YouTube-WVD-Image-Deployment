@@ -1,4 +1,4 @@
-register event grid provider
+register event grid provider in subscription
 
 Create SubsWritesHaveRun RunBook
 

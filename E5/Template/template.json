@@ -72,6 +72,13 @@
                             "$switches = Get-Content -path C:\\DeprovisioningScript.ps1 | Select-String -Pattern Sysprep.exe",
                             "Write-Output \"New Sysprep command is $switches\""
                         ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "runAsSystem": true,
+                        "runElevated": true,
+                        "name": "Module Install",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E5/AppInstallScripts/Modules.ps1"
                     }
                 ],
                 "distribute": [

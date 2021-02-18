@@ -18,7 +18,7 @@ Create Deployment
 
 Compare both
 
-SubsWrites - 2 Runbooks SubsWritesHaveRun, SubsWritesSummary
+SubsWrites - 2 Runbooks SubsWritesRan, SubsWritesSummary
 Compute - Compute
 VMCreate - VMCreate
 AibVmCreate - VMCreate
@@ -27,3 +27,6 @@ Filters:
 data.resourceProvider Microsoft.Compute
 data.operationName ute/virtualMachines/write
 data.authorization.evidence.principalId 5ca1f412ba11d506711b40def
+
+Storage with Private Endpoint
+https://youtu.be/7ZxA7uy05bU

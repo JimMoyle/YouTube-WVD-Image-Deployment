@@ -30,3 +30,7 @@ data.authorization.evidence.principalId 5ca1f412ba11d506711b40def
 
 Storage with Private Endpoint
 https://youtu.be/7ZxA7uy05bU
+
+Show Azure AD auth to storage blob
+
+Show Az modules import to automation account

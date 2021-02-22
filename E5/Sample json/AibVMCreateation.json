@@ -1,0 +1,49 @@
+{
+    "subject": "/subscriptions/2f1abbf5-752d-446a-9846-2a349ee2776e/resourcegroups/IT_YTAzureImageBuilderRG_MicrosoftWindowsDe_cd445fdc-827c-4a0e-b564-ef4ac6585ea4/providers/Microsoft.Compute/virtualMachines/pkrvmv66tjxi71z",
+    "eventType": "Microsoft.Resources.ResourceWriteSuccess",
+    "id": "77e4fb82-3cf1-41a1-b4cf-a3e098053f60",
+    "data": {
+        "authorization": {
+            "scope": "/subscriptions/2f1abbf5-752d-446a-9846-2a349ee2776e/resourcegroups/IT_YTAzureImageBuilderRG_MicrosoftWindowsDe_cd445fdc-827c-4a0e-b564-ef4ac6585ea4/providers/Microsoft.Compute/virtualMachines/pkrvmv66tjxi71z",
+            "action": "Microsoft.Compute/virtualMachines/write",
+            "evidence": {
+                "role": "Contributor",
+                "roleAssignmentScope": "/subscriptions/2f1abbf5-752d-446a-9846-2a349ee2776e/resourceGroups/IT_YTAzureImageBuilderRG_MicrosoftWindowsDe_cd445fdc-827c-4a0e-b564-ef4ac6585ea4",
+                "roleAssignmentId": "383d49f24c9f4f7283d4f6f68e10ceae",
+                "roleDefinitionId": "b24988ac618042a0ab8820f7382dd24c",
+                "principalId": "d1a904f5ca1f412ba11d506711b40def",
+                "principalType": "ServicePrincipal"
+            }
+        },
+        "claims": {
+            "aud": "https://management.azure.com/",
+            "iss": "https://sts.windows.net/a4e71874-1d7e-46ad-b23e-78a2e8baadb9/",
+            "iat": "1613576375",
+            "nbf": "1613576375",
+            "exp": "1613663075",
+            "aio": "E2ZgYHCe01Uh5Jfrq3z2S9PxmxabAA==",
+            "appid": "c4edbcec-e592-4558-8259-6cba0618ef22",
+            "appidacr": "2",
+            "http://schemas.microsoft.com/identity/claims/identityprovider": "https://sts.windows.net/a4e71874-1d7e-46ad-b23e-78a2e8baadb9/",
+            "http://schemas.microsoft.com/identity/claims/objectidentifier": "d1a904f5-ca1f-412b-a11d-506711b40def",
+            "rh": "0.AAAAdBjnpH4drUayPnii6Lqtuey87cSS5VhFgllsugYY7yJ6AAA.",
+            "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": "d1a904f5-ca1f-412b-a11d-506711b40def",
+            "http://schemas.microsoft.com/identity/claims/tenantid": "a4e71874-1d7e-46ad-b23e-78a2e8baadb9",
+            "uti": "Yce-M3CfOUiZEGNO0QEkAA",
+            "ver": "1.0",
+            "xms_mirid": "/subscriptions/2f1abbf5-752d-446a-9846-2a349ee2776e/resourcegroups/YTAzureImageBuilderRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/YTAIBIdentity",
+            "xms_tcdt": "1611245192"
+        },
+        "correlationId": "0b78b3fc-ba66-444c-867e-0d61cb3de308",
+        "resourceProvider": "Microsoft.Compute",
+        "resourceUri": "/subscriptions/2f1abbf5-752d-446a-9846-2a349ee2776e/resourcegroups/IT_YTAzureImageBuilderRG_MicrosoftWindowsDe_cd445fdc-827c-4a0e-b564-ef4ac6585ea4/providers/Microsoft.Compute/virtualMachines/pkrvmv66tjxi71z",
+        "operationName": "Microsoft.Compute/virtualMachines/write",
+        "status": "Succeeded",
+        "subscriptionId": "2f1abbf5-752d-446a-9846-2a349ee2776e",
+        "tenantId": "a4e71874-1d7e-46ad-b23e-78a2e8baadb9"
+    },
+    "dataVersion": "2",
+    "metadataVersion": "1",
+    "eventTime": "2021-02-17T15:49:24.243499Z",
+    "topic": "/subscriptions/2f1abbf5-752d-446a-9846-2a349ee2776e"
+}

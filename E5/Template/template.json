@@ -17,6 +17,9 @@
         "imageId": {
             "type": "string"
         },
+        "SubNetId": {
+            "type": "string"
+        },
         "identityId": {
             "type": "string"
         },
@@ -52,7 +55,10 @@
             },
             "properties": {
                 "vmProfile": {
-                    "vmSize": "[parameters('vmSize')]"
+                    "vmSize": "[parameters('vmSize')]",
+                    "vnetConfig": {
+                        "subnetId": "[parameters('SubNetId')]"
+                    }
                 },
                 "source": {
                     "offer": "[parameters('SrcOffer')]",
@@ -94,7 +100,7 @@
                     {
                         "type": "PowerShell",
                         "runElevated": true,
-                        "name": "get ps1",
+                        "name": "Sleeping tight",
                         "inline": [
                             "Write-Output 'Starting sleep'",
                             "Start-Sleep 7200",

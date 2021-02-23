@@ -23,6 +23,15 @@ $version = '1.5.22'
 #Staging VM size
 $vmSize = 'Standard_D2_v2'
 
+#Existing vNet in same location as AIB
+$vNet = 'West_Europe_AIB'
+
+#Subnet Name of vNet above
+$subnet = 'default'
+
+#Grab (and verify) subnetId
+$subnetId = (Get-AzVirtualNetwork -Name $vNet).subnets | Where-Object { $_.Name -eq $subnet } | Select-Object -exp Id
+
 . Utils\Get-AzureImageInfo.ps1
 $info = Get-AzureImageInfo -Location $location
 
@@ -88,6 +97,7 @@ $paramNewAzResourceGroupDeployment = @{
     SrcPublisher      = $srcPublisher
     SrcOffer          = $srcOffer
     SrcSKU            = $Sku
+    SubNetId          = $subnetId
 }
 New-AzResourceGroupDeployment @paramNewAzResourceGroupDeployment
 

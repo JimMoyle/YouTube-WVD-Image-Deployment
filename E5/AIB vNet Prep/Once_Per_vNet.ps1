@@ -1,13 +1,15 @@
-# VNET properties (update to match your existing VNET, or leave as-is for demo)
 # VNET name
-$vnetName = "myexistingvnet01"
+$vnet = "West_Europe_AIB"
 # subnet name
-$subnetName = "subnet01"
+$subnet = "default"
 # VNET resource group name
-$vnetRgName = "existingVnetRG"
+$vnetResourceGroup = "WVD_Permanent_Resources"
 # Existing Subnet NSG Name or the demo will create it
-$nsgName = "aibdemoNsg"
+
+$nsg = "nsgEpisode5"
 # NOTE! The VNET must always be in the same region as the AIB service region.
+
+$nsgResourceGroup = "Episode5"
 
 $paramAddAzNetworkSecurityRuleConfig = @{
     Name = 'AzureImageBuilderAccess'
@@ -16,18 +18,18 @@ $paramAddAzNetworkSecurityRuleConfig = @{
     Protocol = 'Tcp'
     Direction = 'Inbound'
     Priority = 400
-    SourceAddressPrefix =' AzureLoadBalancer'
+    SourceAddressPrefix = 'AzureLoadBalancer'
     SourcePortRange = '*'
     DestinationAddressPrefix = 'VirtualNetwork'
     DestinationPortRange = '60000-60001'
 }
 
-Get-AzNetworkSecurityGroup -Name $nsgName -ResourceGroupName $vnetRgName  |
+Get-AzNetworkSecurityGroup -Name $nsg -ResourceGroupName $nsgResourceGroup  |
     Add-AzNetworkSecurityRuleConfig @paramAddAzNetworkSecurityRuleConfig |
     Set-AzNetworkSecurityGroup
 
-$virtualNetwork = Get-AzVirtualNetwork -Name $vnetName -ResourceGroupName $vnetRgName
+$virtualNetwork = Get-AzVirtualNetwork -Name $vnet -ResourceGroupName $vnetResourceGroup
 
-($virtualNetwork | Select-Object -ExpandProperty subnets | Where-Object { $_.Name -eq $subnetName } ).privateLinkServiceNetworkPolicies = "Disabled"
+($virtualNetwork | Select-Object -ExpandProperty subnets | Where-Object { $_.Name -eq $subnet } ).privateLinkServiceNetworkPolicies = "Disabled"
 
 $virtualNetwork | Set-AzVirtualNetwork

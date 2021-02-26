@@ -15,7 +15,7 @@ $imageResourceGroup = 'YTAzureImageBuilderRG'
 #Register the following resource providers for use with your Azure subscription if they aren't already registered.
 Register-AzProviderFeature -ProviderNamespace Microsoft.VirtualMachineImages -FeatureName VirtualMachineTemplatePreview -ErrorAction SilentlyContinue
 
-Get-AzResourceProvider -ProviderNamespace Microsoft.Compute, Microsoft.KeyVault, Microsoft.Storage, Microsoft.VirtualMachineImages |
+Get-AzResourceProvider -ProviderNamespace Microsoft.Compute, Microsoft.KeyVault, Microsoft.Storage, Microsoft.VirtualMachineImages, Microsoft.Network |
     Where-Object RegistrationState -ne Registered |
     Register-AzResourceProvider
 

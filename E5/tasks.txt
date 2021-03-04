@@ -1,6 +1,18 @@
+Order of creation of Automation chain -ne intuitive order
+
 register event grid provider in subscription
 
+Create automation account with powershell
+
+Show Automation Account in portal.
+
+Look at Create Run As Account in POrtal, look at documentation.  UUUURGH!
+https://docs.microsoft.com/en-us/azure/automation/quickstart-create-automation-account-template#review-the-template
+https://docs.microsoft.com/en-gb/azure/automation/create-run-as-account
+
 Create SubsWritesHaveRun RunBook
+
+Add code and save - publish
 
 Create an Event Grid System Topic - You can only have 1, contains everything hapenning in your subscription
 

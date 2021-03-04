@@ -1,0 +1,23 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Name": {
+            "defaultValue": "SubscriptionTopic",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.EventGrid/systemTopics",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[parameters('Name')]",
+            "location": "global",
+            "properties": {
+                "source": "/subscriptions/c9e1f998-2a9a-4b59-aed8-a5ce519a4533",
+                "topicType": "microsoft.resources.subscriptions"
+            }
+        }
+    ]
+}

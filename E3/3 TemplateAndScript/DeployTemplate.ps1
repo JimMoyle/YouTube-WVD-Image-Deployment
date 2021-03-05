@@ -7,9 +7,10 @@ $location = "westeurope"
 
 # Destination image resource group
 $imageResourceGroup = 'YTAzureImageBuilderRG'
+$imageResourceGroup = 'Episode5'
 
 # Managed Identity Name
-$identityName = 'YTAIBIdentity'
+$identityName = 'YTAIBIdentity145675'
 
 # Image gallery name
 $sigGalleryName = "YTImageGalleryAIB"
@@ -19,7 +20,7 @@ $destPublisher = 'Finance'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.3.2'
+$version = '1.3.3'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'

@@ -1,8 +1,10 @@
 $rgName = 'Episode5'
-$location = 'UKSouth'
+$location = 'ukSouth'
 $autoAcctName = 'Episode5Account'
-$script = 'E5\AutomationRunbookScripts\IHaveRun.ps1'
+# $script = 'E5\AutomationRunbookScripts\IHaveRun.ps1'
+$script = 'E5\AutomationRunbookScripts\SummaryIncomingData.ps1'
 $systemTopicName = 'SubscriptionTopic'
+$identityName = 'YTAIBIdentity145675'
 
 $path = Get-ChildItem $script
 $Name = $path.BaseName
@@ -10,13 +12,15 @@ $webHookName = 'WebHook' + $Name
 $runbookName = 'RunBook' + $Name
 $eventSubscriptionName = 'EventSubs' + $Name
 
+$identityNameResource = Get-AzUserAssignedIdentity -ResourceGroupName $rgName -Name $identityName
+
 if ( -not ( Get-AzAutomationAccount -AutomationAccountName $autoAcctName -ResourceGroupName $rgName -ErrorAction SilentlyContinue ) ) {
     New-AzAutomationAccount -ResourceGroupName $rgName -Location $location -Name $autoAcctName
 
     #You now need to manually add the RunAs acct to the Automation acct.
 
     do {
-        $q = "Has the runas acct on the automation account $autoAcctName finished creating? (y/n)"
+        $q = "Has the manual addition of the runas acct on the automation account $autoAcctName finished creating? (y/n)"
         $a = Read-Host $q
         switch ($a) {
             'y' { break }
@@ -44,42 +48,38 @@ $param = @{
 
 #>
 
+#Clean up sample tutorial runbooks
+Get-AzAutomationRunbook -ResourceGroupName $rgName -AutomationAccountName $autoAcctName | Where-Object { $_.Name -like "*tutorial*" } | Remove-AzAutomationRunbook -Force
+
 $params = @{
     ResourceGroupName     = $rgName
     AutomationAccountName = $autoAcctName
     RunbookName           = $RunbookName
 }
 
-#Clean up sample tutorial runbooks
-Get-AzAutomationRunbook -ResourceGroupName $rgName -AutomationAccountName $autoAcctName | Where-Object { $_.Name -like "*tutorial*" } | Remove-AzAutomationRunbook -Force
-
-#Create new runbook from our script
-$scriptPath = "E5\AutomationRunbookScripts\IHaveRun.ps1"
-#$scriptPath = "E5\AutomationRunbookScripts\SummaryIncomingData.ps1"
-
 Remove-AzAutomationRunbook -Force @params -ErrorAction SilentlyContinue
-Import-AzAutomationRunbook -Path $scriptPath -Type PowerShell @params
+Import-AzAutomationRunbook -Path $script -Type PowerShell @params
 Publish-AzAutomationRunbook @params
 
 Remove-AzAutomationWebhook -ResourceGroupName $rgName -AutomationAccountName $autoAcctName -Name $webHookName -ErrorAction SilentlyContinue
 $webHook = New-AzAutomationWebhook -Name $webHookName -IsEnabled $true -ExpiryTime (Get-Date).AddYears(1) -Force @params
-
 Get-AzResourceProvider -ProviderNamespace Microsoft.EventGrid |
-    Where-Object RegistrationState -NE Registered |
-    Register-AzResourceProvider
+Where-Object RegistrationState -NE Registered |
+Register-AzResourceProvider
 
-#EventGrid Powershell doesn't support system topics, or subscribing to system topics
+#EventGrid Powershell doesn't support system topics, or subscribing to system topics so let's use an ARM Template
 
-#At this point the Sytem Topic should have been created by you separately using the supplied ARM template
-New-AzResourceGroupDeployment -ResourceGroupName $rgName -TemplateFile 'E5\TemplateForSystemTopic\SystemTopicTemplate.json'
+$prinId = $identityNameResource.PrincipalId.Replace('-','')
+$last25 = $prinId.Substring($prinId.length - 25, 25)
 
+$paramNewAzResourceGroupDeployment = @{
+    ResourceGroupName     = $rgName
+    TemplateFile          = 'E5\TemplateForEventGrid\SubscriptionTemplate.json'
 
-$paramNewAzEventGridSubscription = @{
-    Endpoint              = $webHook.WebhookURI
     EventSubscriptionName = $eventSubscriptionName
-    #ResourceGroupName     = $rgName
-    IncludedEventType     = 'Microsoft.Resources.ResourceWriteSuccess'
     TopicName             = $systemTopicName
+    WebHookUri            = $webHook.WebhookURI
+    ManagedId             = $last25
 }
 
-New-AzEventGridSubscription @paramNewAzEventGridSubscription
+New-AzResourceGroupDeployment @paramNewAzResourceGroupDeployment

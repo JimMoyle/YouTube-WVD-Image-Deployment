@@ -1,6 +1,7 @@
 $imageResourceGroup = 'YTAzureImageBuilderRG'
+$imageResourceGroup = 'Episode5'
 $location = 'westeurope'
-. 'D:\PoShCode\GitHub\YouTube-WVD-Image-Deployment\Utils\Get-AzureImageInfo.ps1'
+. 'Utils\Get-AzureImageInfo.ps1'
 $info = Get-AzureImageInfo -Location $location
 
 # Image definition name

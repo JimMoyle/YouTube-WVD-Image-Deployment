@@ -8,7 +8,7 @@ $location = "westeurope"
 $imageResourceGroup = 'YTAzureImageBuilderRG'
 
 # Managed Identity Name
-$identityName = 'YTAIBIdentity'
+$identityName = 'YTAIBIdentity145675'
 
 # Image gallery name
 $sigGalleryName = "YTImageGalleryAIB"
@@ -18,7 +18,7 @@ $destPublisher = 'Developer'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.4.8'
+$version = '1.0.0'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'

@@ -1,0 +1,89 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "EventSubscriptionName": {
+            "type": "String"
+        },
+        "TopicName": {
+            "type": "String"
+        },
+        "WebHookUri": {
+             "type": "String"
+        },
+        "ManagedId": {
+            "type": "String"
+        }
+    },
+    "variables": {
+        "slash": "/",
+        "resourceName": "[concat(parameters('TopicName'),variables('slash'),parameters('EventSubscriptionName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.EventGrid/systemTopics",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[parameters('TopicName')]",
+            "location": "global",
+            "properties": {
+                "source": "[subscription().Id]",
+                "topicType": "microsoft.resources.subscriptions"
+            }
+        },
+        {
+            "type": "Microsoft.EventGrid/systemTopics/eventSubscriptions",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[variables('resourceName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.EventGrid/systemTopics', parameters('TopicName'))]"
+            ],
+            "properties": {
+                "destination": {
+                    "properties": {
+                        "maxEventsPerBatch": 1,
+                        "preferredBatchSizeInKilobytes": 64,
+                        "endpointUrl": "[parameters('WebHookUri')]"
+                    },
+                    "endpointType": "WebHook"
+                },
+                "filter": {
+                    "includedEventTypes": [
+                        "Microsoft.Resources.ResourceWriteSuccess"
+                    ],
+                    "advancedFilters": [
+                        {
+                            "key": "data.resourceProvider",
+                            "operatorType": "StringEndsWith",
+                            "value": "",
+                            "values": [
+                                "Microsoft.Compute"
+                            ]
+                        },
+                        {
+                            "key": "data.operationName",
+                            "operatorType": "StringEndsWith",
+                            "value": "",
+                            "values": [
+                                "ute/virtualMachines/write"
+                            ]
+                        },
+                        {
+                            "key": "data.authorization.evidence.principalId",
+                            "operatorType": "StringEndsWith",
+                            "value": "",
+                            "values": [
+                                "[parameters('ManagedId')]"
+                            ]
+                        }
+                    ]
+                },
+                "labels": [],
+                "eventDeliverySchema": "EventGridSchema",
+                "retryPolicy": {
+                    "maxDeliveryAttempts": 30,
+                    "eventTimeToLiveInMinutes": 1440
+                }
+            }
+        }
+    ]
+}

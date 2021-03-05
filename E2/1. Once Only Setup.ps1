@@ -5,6 +5,7 @@ $location = 'WestEurope'
 $subscriptionID = (Get-AzContext).Subscription.Id
 # Destination image resource group name
 $imageResourceGroup = 'YTAzureImageBuilderRG'
+$imageResourceGroup = 'Episode5'
 
 #Install AIB Pre-Release Modules
 'Az.ImageBuilder', 'Az.ManagedServiceIdentity' | ForEach-Object { Install-Module -Name $_ -AllowPrerelease }
@@ -27,10 +28,10 @@ New-AzResourceGroup -Name $imageResourceGroup -Location $location
 #Grant Azure image builder permissions to create images in the specified resource group using the following example.
 #Without this permission, the image build process won't complete successfully.
 
-#Create variables for the role definition and identity names. These values must be unique.
-$randomNum = Get-Random -Minimum 100000 -Maximum 999999
-$imageRoleDefName = 'YT Azure Image Builder Service Image Creation Role' + $randomNum
-$identityName = "YTAIBIdentity" + $randomNum
+#Create variables for the role definition and identity names. These values must be unique. Removed random number addition as not necessary
+# $randomNum = Get-Random -Minimum 100000 -Maximum 999999
+$imageRoleDefName = 'YT Azure Image Builder Service Image Creation Role'# + $randomNum
+$identityName = "YTAIBIdentity"# + $randomNum
 
 #Create a user identity.
 New-AzUserAssignedIdentity -ResourceGroupName $imageResourceGroup -Name $identityName

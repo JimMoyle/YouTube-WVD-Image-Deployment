@@ -1,5 +1,5 @@
 # Path to template
-$templateFilePath = ".\E4\Template\template.json"
+$templateFilePath = ".\E4\Template\templateQuick.json"
 
 # Location
 $location = "westeurope"
@@ -8,7 +8,7 @@ $location = "westeurope"
 $imageResourceGroup = 'YTAzureImageBuilderRG'
 
 # Managed Identity Name
-$identityName = 'YTAIBIdentity145675'
+$identityName = 'YTAIBIdentity'
 
 # Image gallery name
 $sigGalleryName = "YTImageGalleryAIB"
@@ -18,7 +18,7 @@ $destPublisher = 'Developer'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.0.0'
+$version = '3.9.9'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'

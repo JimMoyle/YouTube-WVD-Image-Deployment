@@ -18,7 +18,7 @@ $destPublisher = 'Developer'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.5.22'
+$version = '1.5.24'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'
@@ -33,7 +33,7 @@ $subnet = 'default'
 $subnetId = (Get-AzVirtualNetwork -Name $vNet).subnets | Where-Object { $_.Name -eq $subnet } | Select-Object -exp Id
 
 . Utils\Get-AzureImageInfo.ps1
-$info = Get-AzureImageInfo -Location $location
+$info = Get-AzureImageInfo -Location $location #-Offer 'windows-10' -SkuMatchString '*G2'
 
 $Sku = $info.sku
 $srcPublisher = $info.Publisher
@@ -69,16 +69,19 @@ if ((Get-AzGalleryImageDefinition -ResourceGroupName $imageResourceGroup -Galler
 }
 
 $imageVersions = Get-AzGalleryImageVersion -GalleryImageDefinitionName $imageDefName -ResourceGroupName $imageResourceGroup -GalleryName $sigGalleryName
-$verList = foreach ($ver in $imageVersions.Name) {
-    [version]$ver
-}
-$topVersion = $verList | Sort-Object -Descending | Select-Object -First 1
 
-if ( [version]$Version -le $topVersion ) {
-    Write-Error "Specified Version $Version not greater than current available $topVersion"
-    break
+if ($imageVersions.count -gt 0) {
+    $verList = foreach ($ver in $imageVersions.Name) {
+        [version]$ver
+    }
+    $topVersion = $verList | Sort-Object -Descending | Select-Object -First 1
+
+    if ( [version]$Version -le $topVersion ) {
+        Write-Error "Specified Version $Version not greater than current available $topVersion"
+        break
+    }
+    #$gallery = Get-AzGallery -ResourceGroupName $imageResourceGroup -GalleryName $sigGalleryName
 }
-#$gallery = Get-AzGallery -ResourceGroupName $imageResourceGroup -GalleryName $sigGalleryName
 
 $imageDefinition = Get-AzGalleryImageDefinition -ResourceGroupName $imageResourceGroup -GalleryName $sigGalleryName -Name $imageDefName
 

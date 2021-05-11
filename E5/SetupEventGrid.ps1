@@ -18,16 +18,34 @@ if ( -not ( Get-AzAutomationAccount -AutomationAccountName $autoAcctName -Resour
     New-AzAutomationAccount -ResourceGroupName $rgName -Location $location -Name $autoAcctName
 
     #You now need to manually add the RunAs acct to the Automation acct.
-
     do {
         $q = "Has the manual addition of the runas acct on the automation account $autoAcctName finished creating? (y/n)"
         $a = Read-Host $q
         switch ($a) {
             'y' { break }
             'n' { Write-Output 'Go do it now' }
-            Default { Read-Host $q }
+            Default { Clear-Host ; Read-Host $q }
         }
     } until ($a -eq 'y')
+
+    #Az.Accounts needs to be first
+    $modules = 'Az.Accounts', 'Az.Compute', 'Az.Resources'
+    foreach ($moduleName in $modules) {
+
+        $galleryData = Find-Module $moduleName
+        $moduleVersion = $galleryData.Version
+
+        $paramNewAzAutomationModule = @{
+            AutomationAccountName = $autoAcctName
+            ResourceGroupName     = $rgName
+            Name                  = $moduleName
+            ContentLinkUri        = "https://www.powershellgallery.com/api/v2/package/$moduleName/$moduleVersion"
+        }
+        New-AzAutomationModule @paramNewAzAutomationModule
+        while ( (Get-AzAutomationModule -ResourceGroupName $rgname -Name $moduleName -AutomationAccountName $autoAcctName).ProvisioningState -ne 'Succeeded'){
+            Start-Sleep 1
+        }
+    }
 }
 
 <# Don't bother with this it's awful
@@ -69,7 +87,7 @@ Register-AzResourceProvider
 
 #EventGrid Powershell doesn't support system topics, or subscribing to system topics so let's use an ARM Template
 
-$prinId = $identityNameResource.PrincipalId.Replace('-','')
+$prinId = $identityNameResource.PrincipalId.Replace('-', '')
 $last25 = $prinId.Substring($prinId.length - 25, 25)
 
 $paramNewAzResourceGroupDeployment = @{

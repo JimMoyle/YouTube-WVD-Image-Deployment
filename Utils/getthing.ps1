@@ -2,7 +2,8 @@ param(
     $path = 'C:\jimm'
 )
 
-foreach ($file in Get-ChildItem C:\jimm\customization.log -File) { $rx = '\$password = \".\w*\"'; (Get-Content $file | Select-String -Pattern $rx).ToString() }
+foreach ($file in Get-ChildItem C:\jimm\customization.log -File) {
+    $rx = '\$password = \".\w*\"'; (Get-Content $file.FullName | Select-String -Pattern $rx).ToString() }
 <#
 {
     "type": "PowerShell",

@@ -32,7 +32,7 @@ $Cred = New-Object System.Management.Automation.PSCredential ($userName, $passwo
 
 $driveMap | ForEach-Object {
 
-    Remove-PSDrive -Name $_.Drive -Force
+    Remove-PSDrive -Name $_.Drive -Force -ErrorAction SilentlyContinue
 
     $path = Join-Path $target $_.Folder
 

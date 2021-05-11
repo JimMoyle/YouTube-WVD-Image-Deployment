@@ -1,0 +1,219 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "defaultValue": "uksouth",
+            "type": "string"
+        },
+        "networkInterfaceName": {
+            "defaultValue": "deletemeNIC",
+            "type": "string"
+        },
+        "networkSecurityGroupName": {
+            "defaultValue": "deletemeNSG",
+            "type": "string"
+        },
+        "subnetName": {
+            "defaultValue": "default",
+            "type": "string"
+        },
+        "virtualNetworkId": {
+            "defaultValue": "/subscriptions/2f1abbf5-752d-446a-9846-2a349ee2776e/resourceGroups/WVD_Permanent_Resources/providers/Microsoft.Network/virtualNetworks/WVD_Permanent_Resources-vnet",
+            "type": "string"
+        },
+        "virtualMachineName": {
+            "defaultValue": "deleteme",
+            "type": "string"
+        },
+        "virtualMachineComputerName": {
+            "defaultValue": "deleteme",
+            "type": "string"
+        },
+        "osDiskType": {
+            "defaultValue": "StandardSSD_LRS",
+            "type": "string"
+        },
+        "virtualMachineSize": {
+            "defaultValue": "Standard_B2s",
+            "type": "string"
+        },
+        "adminUsername": {
+            "defaultValue": "JimAdmin",
+            "type": "string"
+        },
+        "adminPassword": {
+            "type": "secureString"
+        },
+        "patchMode": {
+            "defaultValue": "AutomaticByOS",
+            "type": "string"
+        },
+        "enableHotpatching": {
+            "defaultValue": false,
+            "type": "bool"
+        },
+        "autoShutdownStatus": {
+            "defaultValue": "Enabled",
+            "type": "string"
+        },
+        "autoShutdownTime": {
+            "defaultValue": "23:00",
+            "type": "string"
+        },
+        "autoShutdownTimeZone": {
+            "defaultValue": "UTC",
+            "type": "string"
+        },
+        "autoShutdownNotificationStatus": {
+            "defaultValue": "Disabled",
+            "type": "string"
+        },
+        "autoShutdownNotificationLocale": {
+            "defaultValue": "en",
+            "type": "string"
+        }
+    },
+    "variables": {
+        "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]",
+        "vnetId": "[parameters('virtualNetworkId')]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+    },
+    "resources": [
+        {
+            "name": "[parameters('networkInterfaceName')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2018-10-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic"
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId')]"
+                }
+            },
+            "tags": {
+                "Author": "Jim Moyle",
+                "Project": "YouTube",
+                "Status": "DeleteMe"
+            }
+        },
+        {
+            "name": "[parameters('networkSecurityGroupName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-02-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": []
+            },
+            "tags": {
+                "Author": "Jim Moyle",
+                "Project": "YouTube",
+                "Status": "DeleteMe"
+            }
+        },
+        {
+            "name": "[parameters('virtualMachineName')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2020-12-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('osDiskType')]"
+                        }
+                    },
+                    "imageReference": {
+                        "id": "/subscriptions/2f1abbf5-752d-446a-9846-2a349ee2776e/resourceGroups/YTAzureImageBuilderRG/providers/Microsoft.Compute/galleries/YTImageGalleryAIB/images/Developer.en-GB.20h2-evd-o365pp"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]"
+                        }
+                    ]
+                },
+                "securityProfile": {},
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachineComputerName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "windowsConfiguration": {
+                        "enableAutomaticUpdates": true,
+                        "provisionVmAgent": true,
+                        "patchSettings": {
+                            "enableHotpatching": "[parameters('enableHotpatching')]",
+                            "patchMode": "[parameters('patchMode')]"
+                        }
+                    }
+                },
+                "licenseType": "Windows_Client",
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true
+                    }
+                }
+            },
+            "tags": {
+                "Author": "Jim Moyle",
+                "Project": "YouTube",
+                "Status": "DeleteMe"
+            }
+        },
+        {
+            "name": "[concat('shutdown-computevm-', parameters('virtualMachineName'))]",
+            "type": "Microsoft.DevTestLab/schedules",
+            "apiVersion": "2017-04-26-preview",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+            ],
+            "properties": {
+                "status": "[parameters('autoShutdownStatus')]",
+                "taskType": "ComputeVmShutdownTask",
+                "dailyRecurrence": {
+                    "time": "[parameters('autoShutdownTime')]"
+                },
+                "timeZoneId": "[parameters('autoShutdownTimeZone')]",
+                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachineName'))]",
+                "notificationSettings": {
+                    "status": "[parameters('autoShutdownNotificationStatus')]",
+                    "notificationLocale": "[parameters('autoShutdownNotificationLocale')]",
+                    "timeInMinutes": "30"
+                }
+            },
+            "tags": {
+                "Author": "Jim Moyle",
+                "Project": "YouTube",
+                "Status": "DeleteMe"
+            }
+        }
+    ],
+    "outputs": {
+        "adminUsername": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
+        }
+    }
+}

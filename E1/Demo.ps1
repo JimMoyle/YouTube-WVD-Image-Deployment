@@ -16,7 +16,7 @@ $sku
 $sku | Get-AzVMImage | Sort-Object -Descending -Property Version | Select-Object -First 1
 
 # I've put this into a function for you to use (works for any image, but defaults are for WVD)
-. .\Get-AzureImageInfo.ps1
+. .\E1\Get-AzureImageInfo.ps1
 
 Get-AzureImageInfo -Location 'uksouth'
 

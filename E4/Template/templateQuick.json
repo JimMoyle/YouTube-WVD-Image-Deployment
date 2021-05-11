@@ -17,9 +17,6 @@
         "imageId": {
             "type": "string"
         },
-        "SubNetId": {
-            "type": "string"
-        },
         "identityId": {
             "type": "string"
         },
@@ -55,10 +52,7 @@
             },
             "properties": {
                 "vmProfile": {
-                    "vmSize": "[parameters('vmSize')]",
-                    "vnetConfig": {
-                        "subnetId": "[parameters('SubNetId')]"
-                    }
+                    "vmSize": "[parameters('vmSize')]"
                 },
                 "source": {
                     "offer": "[parameters('SrcOffer')]",
@@ -70,14 +64,10 @@
                 "customize": [
                     {
                         "type": "PowerShell",
+                        "runAsSystem": true,
                         "runElevated": true,
-                        "name": "get ps1",
-                        "inline": [
-                            "Write-Output 'getting powershell files'",
-                            "gci -path c:\\Windows\\temp -File -Filter *.ps1",
-                            "gci -path c:\\Windows\\temp -File -Filter *.ps1 | get-content",
-                            "Write-Output 'Done powershell files'"
-                        ]
+                        "name": "Prep",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/Prep.ps1"
                     },
                     {
                         "type": "PowerShell",
@@ -92,13 +82,36 @@
                     },
                     {
                         "type": "PowerShell",
+                        "runAsSystem": true,
                         "runElevated": true,
-                        "name": "Sleeping tight",
-                        "inline": [
-                            "Write-Output 'Starting sleep'",
-                            "Start-Sleep 7200",
-                            "Write-Output 'Done Sleeping'"
-                        ]
+                        "name": "Powershell",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/Powershell.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "runAsSystem": true,
+                        "runElevated": true,
+                        "name": "GitForWindows",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/GitForWindows.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "runAsSystem": true,
+                        "runElevated": true,
+                        "name": "VSCode",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/VSCode.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "runAsSystem": true,
+                        "runElevated": true,
+                        "name": "Teams",
+                        "scriptUri": "https://raw.githubusercontent.com/JimMoyle/YouTube-WVD-Image-Deployment/main/E4/AppInstallScripts/Teams.ps1"
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-host 'restarting post InstallsF'",
+                        "restartTimeout": "5m"
                     }
                 ],
                 "distribute": [

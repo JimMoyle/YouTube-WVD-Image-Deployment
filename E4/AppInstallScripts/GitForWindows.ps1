@@ -5,7 +5,7 @@ if (-not(Test-Path $BuildDir)) {
     New-Item  -ItemType Directory $BuildDir
 }
 #Use Evergreen to get all versions of Git For Windows.
-$allVersions = Get-GitForWindows
+$allVersions = Find-EvergreenApp -Name GitForWindows | Get-EvergreenApp
 
 #Get Most recent version
 $mostRecent = $allVersions | Sort-Object -Descending -Property 'Version' | Select-Object -First 1 | Select-Object -ExpandProperty 'Version'

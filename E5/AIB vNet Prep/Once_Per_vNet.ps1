@@ -1,15 +1,15 @@
 # VNET name
+# NOTE! The VNET must always be in the same region as the AIB service region.
 $vnet = "West_Europe_AIB"
 # subnet name
 $subnet = "default"
-# VNET resource group name
-$vnetResourceGroup = "WVD_Permanent_Resources"
+
 # Existing Subnet NSG Name or the demo will create it
-
 $nsg = "nsgEpisode5"
-# NOTE! The VNET must always be in the same region as the AIB service region.
-
 $nsgResourceGroup = "Episode5"
+
+# VNET resource group name
+$vnetResourceGroup = 'WVD_Permanent_Resources'
 
 $paramAddAzNetworkSecurityRuleConfig = @{
     Name = 'AzureImageBuilderAccess'

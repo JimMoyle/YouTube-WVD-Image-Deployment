@@ -3,7 +3,7 @@ $BuildDir = 'c:\CustomizerArtifacts'
 if (-not(Test-Path $BuildDir)) {
     New-Item  -ItemType Directory $BuildDir
 }
-$allVersions = Get-MicrosoftPowerShell
+$allVersions = Find-EvergreenApp -Name MicrosoftPowerShell | Get-EvergreenApp
 $mostRecent = $allVersions | Sort-Object -Descending -Property 'Version' | Select-Object -First 1 | Select-Object -ExpandProperty 'Version'
 $allOnVersion = $allVersions | Where-Object { $_.version -eq $mostRecent }
 $myVersion = $allOnVersion | Where-Object { $_.Architecture -eq 'x64' -and $_.Platform -eq 'Windows' -and $_.URI -like "*.msi"}

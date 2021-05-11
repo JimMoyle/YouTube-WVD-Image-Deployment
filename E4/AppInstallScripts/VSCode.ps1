@@ -3,7 +3,7 @@ $BuildDir = 'C:\CustomizerArtifacts'
 if (-not(Test-Path $BuildDir)){
     New-Item  -ItemType Directory $BuildDir
 }
-$allVersions = Get-MicrosoftVisualStudioCode
+$allVersions = Find-EvergreenApp -Name MicrosoftVisualStudioCode | Get-EvergreenApp
 $mostRecent = $allVersions |  Where-Object { $_.Channel -eq 'Stable' } | Sort-Object -Descending -Property 'Version' | Select-Object -First 1 | Select-Object -ExpandProperty 'Version'
 $allOnVersion = $allVersions | Where-Object { $_.version -eq $mostRecent }
 $myVersion = $allOnVersion | Where-Object { $_.Architecture -eq 'x64' -and $_.platform -eq "win32-x64" }

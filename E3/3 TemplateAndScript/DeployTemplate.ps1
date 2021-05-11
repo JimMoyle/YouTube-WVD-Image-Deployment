@@ -20,7 +20,7 @@ $destPublisher = 'Finance'
 $destOffer = 'en-GB'
 
 #Image definition version
-$version = '1.3.3'
+$version = '1.5.0'
 
 #Staging VM size
 $vmSize = 'Standard_D2_v2'

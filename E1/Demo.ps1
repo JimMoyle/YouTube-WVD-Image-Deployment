@@ -1,7 +1,7 @@
 # All files will be available in my associated GitHub repository
 # https://github.com/JimMoyle/YouTube-WVD-Image-Deployment
 
-# Check we're comnnected to Azure
+# Check we're connected to Azure
 (Get-AzContext).Account.id
 
 # There variables are needed so we know which image to base things from

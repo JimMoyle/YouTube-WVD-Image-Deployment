@@ -5,10 +5,9 @@ $location = 'WestEurope'
 $subscriptionID = (Get-AzContext).Subscription.Id
 # Destination image resource group name
 $imageResourceGroup = 'YTAzureImageBuilderRG'
-$imageResourceGroup = 'Episode5'
 
 #Install AIB Pre-Release Modules
-'Az.ImageBuilder', 'Az.ManagedServiceIdentity' | ForEach-Object { Install-Module -Name $_ -AllowPrerelease }
+'Az.ImageBuilder', 'Az.ManagedServiceIdentity' | ForEach-Object { Install-Module -Name $_ }
 
 #Custom Azure Marketplace image verification function (find in E1)
 . .\E1\Get-AzureImageInfo.ps1
@@ -34,7 +33,7 @@ $imageRoleDefName = 'YT Azure Image Builder Service Image Creation Role'# + $ran
 $identityName = "YTAIBIdentity"# + $randomNum
 
 #Create a user identity.
-New-AzUserAssignedIdentity -ResourceGroupName $imageResourceGroup -Name $identityName
+New-AzUserAssignedIdentity -ResourceGroupName $imageResourceGroup -Name $identityName -Location $location
 
 #Store the identity resource and principal IDs in variables.
 $identity = Get-AzUserAssignedIdentity -ResourceGroupName $imageResourceGroup -Name $identityName

@@ -12,4 +12,4 @@ Here is the [playlist link](<https://youtube.com/playlist?list=PLsg-xXEEmCJpd3aq
 
 [Episode 4 - Application installation](<https://youtu.be/JKtEBGco6-E>)
 
-[Episode 5: Locked down scenarios](<https://youtu.be/d4OKCGG9Ywk>)
+[Episode 5 - Locked down scenarios](<https://youtu.be/d4OKCGG9Ywk>)

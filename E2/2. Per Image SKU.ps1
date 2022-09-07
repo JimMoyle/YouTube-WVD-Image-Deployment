@@ -39,17 +39,16 @@ $SrcObjParams = @{
     Sku                     = $info.Sku
     Version                 = 'latest'
 }
-$srcPlatform = New-AzImageBuilderSourceObject @SrcObjParams
+$srcPlatform = New-AzImageBuilderTemplateSourceObject -PlatformImageSource @SrcObjParams
 
 #Create an Azure image builder customization object.
 
 $ImgCustomParams = @{
-    PowerShellCustomizer = $true
-    CustomizerName       = 'settingUpMgmtAgtPath'
+    Name       = 'settingUpMgmtAgtPath'
     RunElevated          = $false
     Inline               = @("mkdir c:\\buildActions", "echo Azure-Image-Builder-Was-Here  > c:\\buildActions\\buildActionsOutput.txt")
 }
-$Customizer = New-AzImageBuilderCustomizerObject @ImgCustomParams
+$Customizer = New-AzImageBuilderTemplateCustomizerObject -PowerShellCustomizer @ImgCustomParams
 
 #Create an Azure image builder distributor object.
 
@@ -61,7 +60,7 @@ $disObjParams = @{
     RunOutputName          = $runOutputName
     ExcludeFromLatest      = $false
 }
-$disSharedImg = New-AzImageBuilderDistributorObject @disObjParams
+$disSharedImg = New-AzImageBuilderTemplateDistributorObject @disObjParams
 
 #Create an Azure image builder template.
 

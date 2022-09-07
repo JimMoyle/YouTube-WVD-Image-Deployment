@@ -11,3 +11,5 @@ Here is the [playlist link](<https://youtube.com/playlist?list=PLsg-xXEEmCJpd3aq
 [Episode 3 - ARM Templates for AIB](<https://youtu.be/B5HqdmaHNsY>)
 
 [Episode 4 - Application installation](<https://youtu.be/JKtEBGco6-E>)
+
+[Episode 5: Locked down scenarios](<https://youtu.be/d4OKCGG9Ywk>)
